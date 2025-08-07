@@ -11,6 +11,7 @@ function App() {
 
     const fetchCats = useCallback(async (pageNum: number) => {
         setLoading(true);
+        setError(undefined)
         try {
             const response = await fetch(`https://api.thecatapi.com/v1/images/search?size=med&mime_types=jpg&format=json&has_breeds=true&order=RANDOM&page=${pageNum}&limit=10`);
             const result = await response.json();
@@ -65,7 +66,7 @@ function App() {
     }, [loading, view]);
 
     useEffect(() => {
-        if (page !== 0) {
+        if (page !== 0 && !error) {
             fetchCats(page);
         }
     }, [page, fetchCats]);
@@ -112,10 +113,10 @@ function App() {
                 {loading && view === "all" && (
                     <p>{"Loading..."}</p>
                 )}
-                {!favoriteList.length && (
+                {!loading && !favoriteList.length && view === "favorites" && (
                     <p>{"You don't have any favorite cats"}</p>
                 )}
-                {error && (
+                {!loading && error && view === "all" && (
                     <p>{error}</p>
                 )}
             </div>
