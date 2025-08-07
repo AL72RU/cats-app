@@ -106,7 +106,10 @@ function App() {
                             onClick={() => toggleFavorite(url)}
                         >
                             <img className="app-body__item-image" src={url} alt="" />
-                            <div className={`app-body__favorites-button${isFavorite(url) ? " active" : ""}`}/>
+                            <div className={`app-body__favorites-button${isFavorite(url) && view === "all" 
+                                ? " active" 
+                                : view === "favorites" ? " favorite" : ""
+                            }`}/>
                         </div>
                     ))}
                 </div>
